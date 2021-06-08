@@ -275,7 +275,7 @@ def compile_dataflow(in_path, out_dir, patch_name=None,
             print("--> Generating DPF plugin")
         results["c2dpf"] = c2dpf.c2dpf.compile(
             c_src_dir=c_src_dir,
-            out_dir=os.path.join(out_dir, "distrho"),
+            out_dir=os.path.join(out_dir, "plugin"),
             patch_name=patch_name,
             num_input_channels=num_input_channels,
             num_output_channels=num_output_channels,

@@ -20,7 +20,9 @@ static float scaleParameterForIndex(uint32_t index, float value)
 {{class_name}}::{{class_name}}()
  : Plugin(HV_LV2_NUM_PARAMETERS, 0, 0)
 {
-
+    {%- for k, v in receivers %}
+        _parameters[{{loop.index-1}}] = {{(v.attributes.default-v.attributes.min)/(v.attributes.max-v.attributes.min)}}f; // {{v.display}}
+    {%- endfor %}
 }
 
 {{class_name}}::~{{class_name}}() {
@@ -40,7 +42,7 @@ void {{class_name}}::initParameter(uint32_t index, Parameter& parameter)
       {%- if v.attributes.type == 'bool': -%}
         | kParameterIsBoolean
       {%- endif -%};
-        _parameters[{{loop.index-1}}] = {{(v.attributes.default-v.attributes.min)/(v.attributes.max-v.attributes.min)}}f; // {{v.display}}
+        parameter.ranges.def = {{(v.attributes.default-v.attributes.min)/(v.attributes.max-v.attributes.min)}}f;
         break;
     {%- endfor %}
   }
