@@ -18,7 +18,7 @@ import json
 import os
 import time
 
-from .PdParser import PdParser
+from hvcc.interpreters.pd2hv.PdParser import PdParser
 
 
 class Colours:

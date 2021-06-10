@@ -39,26 +39,23 @@ def compile_and_run_patch(pd_file):
     shutil.copy2(os.path.join(SCRIPT_DIR, "test_speed.c"), c_src_dir)
 
     # pd2hv
-    py_script = os.path.join(SCRIPT_DIR, "../interpreters/pd2hv/pd2hv.py")
-    cmd = (["python", py_script, pd_file,
-            "-o", out_dir,
-            "-v"])
+    py_script = os.path.join(SCRIPT_DIR, "../hvcc/interpreters/pd2hv/pd2hv.py")
+    cmd = (["python", py_script, pd_file, out_dir, "-v"])
     print(subprocess.check_output(cmd))
 
     # hv2ir
-    py_script = os.path.join(SCRIPT_DIR, "../core/hv2ir/hv2ir.py")
+    py_script = os.path.join(SCRIPT_DIR, "../hvcc/core/hv2ir/hv2ir.py")
     hv_file = os.path.join(out_dir, patch_name + ".hv.json")
     ir_file = os.path.join(out_dir, patch_name + ".ir.hv.json")
-    cmd = (["python", py_script, hv_file,
-            "--hv_ir_path", ir_file])
+    cmd = (["python", py_script, hv_file, "--hv_ir_path", ir_file])
     print(subprocess.check_output(cmd))
 
     # ir2c
-    ir2c_dir = os.path.join(SCRIPT_DIR, "../generators/ir2c")
+    ir2c_dir = os.path.join(SCRIPT_DIR, "../hvcc/generators/ir2c/")
     cmd = (["python", os.path.join(ir2c_dir, "ir2c.py"), ir_file,
-            "--static_path", os.path.join(ir2c_dir, "static"),
-            "--template_path", os.path.join(ir2c_dir, "template"),
-            "--output_path", c_src_dir,
+            "--static_dir", os.path.join(ir2c_dir, "static"),
+            # "--template_path", os.path.join(ir2c_dir, "template"),
+            "--output_dir", c_src_dir,
             "--verbose"])
     print(subprocess.check_output(cmd))
 

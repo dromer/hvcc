@@ -19,9 +19,9 @@ import shutil
 import sys
 import tempfile
 import unittest
-import urlparse
+from urllib import parse as urlparse
 
-sys.path.append("../../../hv-uploader")
+sys.path.append("../hv-uploader")
 import hv_uploader
 
 
